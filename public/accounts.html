@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html ng-app="demoApp">
+<head>
+  <meta charset="UTF-8">
+  <title>Accounts - AngularJS + Node.js Demo</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.3/angular.min.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/accountCtrl.js"></script>
+</head>
+<body ng-controller="AccountCtrl as vm">
+  <h1>Account Management</h1>
+
+  <h2>Create Account</h2>
+  <form ng-submit="vm.createAccount()">
+    <input type="text" ng-model="vm.newAccount.name" placeholder="Name" required />
+    <input type="email" ng-model="vm.newAccount.email" placeholder="Email" required />
+    <button type="submit">Add</button>
+  </form>
+
+  <h2>Accounts</h2>
+  <table border="1" cellpadding="6">
+    <tr><th>ID</th><th>Name</th><th>Email</th><th>Actions</th></tr>
+    <tr ng-repeat="acct in vm.accounts">
+      <td>{{ acct.id }}</td>
+      <td>{{ acct.name }}</td>
+      <td>{{ acct.email }}</td>
+      <td>
+        <button ng-click="vm.startEdit(acct)">Edit</button>
+        <button ng-click="vm.deleteAccount(acct.id)">Delete</button>
+      </td>
+    </tr>
+  </table>
+
+  <div ng-if="vm.editAccount">
+    <h2>Edit Account #{{ vm.editAccount.id }}</h2>
+    <form ng-submit="vm.saveEdit()">
+      <input type="text" ng-model="vm.editAccount.name" />
+      <input type="email" ng-model="vm.editAccount.email" />
+      <button type="submit">Save</button>
+      <button type="button" ng-click="vm.cancelEdit()">Cancel</button>
+    </form>
+  </div>
+
+  <p><a href="/">Back to Home</a></p>
+</body>
+</html>
